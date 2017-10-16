@@ -1,0 +1,98 @@
+
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<body ng-app="myApp">
+
+<div class="container">
+    <h4>
+        Bây giờ hãy xác định các property (thuộc tính) cho {{className}}
+    </h4>
+</div>
+<div class="container">
+    <div class="jumbotron">
+        <div>
+            <b>
+                Gợi ý
+            </b>
+        </div>
+        <div ng-repeat="seedSchema in seedsSchemas">
+            Một "{{seedSchema.title}}" sẽ có các thuộc tính (thông tin) sau:
+            <span>
+                <span ng-repeat="prop in seedSchema.props">
+                {{prop.title}},
+            </span>
+            </span>
+        </div>
+    </div>
+    <div>
+        <div class="jumbotron">
+            <h4>
+                Các thuộc tính
+            </h4>
+            <div ng-hide="props.length">
+                Bạn chưa thêm thuộc tính nào
+            </div>
+            <div ng-repeat="prop in props">
+                {{prop.title}}
+            </div>
+        </div>
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Tên thuộc tính mới" autofocus ng-model="new_prop_title">
+            <div class="input-group-btn">
+                <button class="btn btn-success" ng-click="props.push({title:new_prop_title});new_prop_title=''">
+                    Thêm
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+            </div>
+        </div>
+        <div ng-repeat="seedSchema in seedsSchemas" ng-show="seedSchema.title == className">
+            Bạn có thể click để thêm các thuộc tính <span>
+                <strong ng-repeat="prop in seedSchema.props">
+                {{prop.title}},
+            </strong>
+            </span>
+            <a href="#" ng-click="$parent.props=$parent.props.concat(seedSchema.props)">
+                Click thêm ngay
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    angular
+        .module('myApp', [])
+        .run(function ($rootScope, $location) {
+            var className = decodeURIComponent($location.absUrl().split('className=')[1]);
+            $rootScope.className = className;
+            $rootScope.props = [];
+            $rootScope.seedsSchemas = [
+                {
+                    title: "Video",
+                    props: [
+                        {title: "độ dài"},
+                        {title: "số lượt xem"},
+                        {title: "người đăng"}
+                    ]
+                },
+                {
+                    title: "Xe hơi",
+                    props: [
+                        {title: "màu xe"},
+                        {title: "giá tiền"},
+                        {title: "hãng xe"}
+                    ]
+                },
+                {
+                    title: "Smartphone",
+                    props: [
+                        {title: "cỡ màn hình"},
+                        {title: "tên chip CPU"},
+                        {title: "thông số RAM"}
+                    ]
+                }
+            ];
+        })
+    ;
+</script>
