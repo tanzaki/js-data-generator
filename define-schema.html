@@ -35,7 +35,8 @@
                 Bạn chưa thêm thuộc tính nào
             </div>
             <div ng-repeat="prop in props">
-                {{prop.title}}
+                Thuộc tính <span style="text-transform: capitalize">"{{prop.title}}"</span> có tên đại diện là <input type="text" ng-model="prop.slug" placeholder="ví dụ: mau_xe, gia_tien, hang_xe">
+                <div ng-hide="regexAlphabetUnderscore(prop.slug)" class="text-danger"> - Tên đại diện chỉ chứa kỹ tự thường a-z và dấu gạch dưới</div>
             </div>
         </div>
         <div class="input-group">
@@ -58,6 +59,9 @@
             </a>
         </div>
     </div>
+    <div>
+        <a href="generate.html?{{props}}" class="btn btn-success btn-lg pull-right">Tiếp tục</a>
+    </div>
 </div>
 </body>
 <script>
@@ -67,6 +71,9 @@
             var className = decodeURIComponent($location.absUrl().split('className=')[1]);
             $rootScope.className = className;
             $rootScope.props = [];
+            $rootScope.regexAlphabetUnderscore = function(slug){
+                return (/^[a-z_]+$/gi).test(slug);
+            };
             $rootScope.seedsSchemas = [
                 {
                     title: "Video",
