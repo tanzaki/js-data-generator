@@ -1,0 +1,83 @@
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<body ng-app="myApp">
+
+<div class="container">
+    <h4>
+        Hãy nhập tên của object (đối tượng)
+    </h4>
+</div>
+<div class="container">
+    <div>
+        <div>
+            Ví dụ bạn có thể chọn: video, phim, xe hơi, smartphone . . . là các object đếm được,
+        </div>
+        <div>
+            Có thể nói tới
+            "danh sách video",
+            "danh sách xe hơi",
+            "danh sách smartphone"
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="jumbotron">
+        Bạn hãy nhập tên object để có thể đi tiếp
+        <div class="input-group">
+            <input type="text" ng-model="className" class="form-control" placeholder="Tên object">
+            <div class="input-group-btn">
+                <a href="define-schema.html?className={{className}}" class="btn btn-success" ng-disabled="!className" type="submit">
+                    Tiếp tục <i class="glyphicon glyphicon-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div>
+        <ul>
+            <li ng-repeat="seedSchema in seedsSchemas">
+                <button ng-click="$parent.className=seedSchema.title">
+                    Chọn tên object là {{seedSchema.title}}
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</body>
+<script>
+    angular
+        .module('myApp', [])
+        .run(function ($rootScope) {
+            $rootScope.seedsSchemas = [
+                {
+                    title:"Video",
+                    props: [
+                        {title:"độ dài"},
+                        {title:"số lượt xem"},
+                        {title:"người đăng"}
+                    ]
+                },
+                {
+                    title:"Xe hơi",
+                    props: [
+                        {title:"màu xe"},
+                        {title:"giá tiền"},
+                        {title:"hãng xe"}
+                    ]
+                },
+                {
+                    title:"Smartphone",
+                    props: [
+                        {title:"cỡ màn hình"},
+                        {title:"tên chip CPU"},
+                        {title:"thông số RAM"}
+                    ]
+                }
+            ];
+        })
+    ;
+</script>
